@@ -2,10 +2,10 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{js,jsx}',
-    './components/**/*.{js,jsx}',
-    './app/**/*.{js,jsx}',
-    './src/**/*.{js,jsx}',
+    "./pages/**/*.{js,jsx}",
+    "./components/**/*.{js,jsx}",
+    "./app/**/*.{js,jsx}",
+    "./src/**/*.{js,jsx}",
   ],
   prefix: "",
   theme: {
@@ -51,6 +51,7 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "white-95": "rgba(255, 255, 255, 0.99)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -73,5 +74,23 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-}
+  plugins: [
+    require("tailwindcss-animate"),
+    function ({ addUtilities }) {
+      const newUtilities = {
+        ".hoverOpacity": {
+          transition:
+            "opacity 0.3s cubic-bezier(.4,0,.2,1), color 0.3s cubic-bezier(.4,0,.2,1), background-color 0.3s cubic-bezier(.4,0,.2,1)",
+        },
+        ".via-appBackground": {
+          "--tw-gradient-to":
+            "rgba(245,245,247,0) var(--tw-gradient-to-position)",
+          "--tw-gradient-stops":
+            "var(--tw-gradient-from), #f5f5f7 var(--tw-gradient-via-position), var(--tw-gradient-to)",
+        },
+      };
+
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    },
+  ],
+};
