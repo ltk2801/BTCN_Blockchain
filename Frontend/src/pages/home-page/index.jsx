@@ -1,6 +1,11 @@
 import Container from "@/components/layout/container";
 import React from "react";
+import Assets from "./assets";
 import Banner from "./banner";
+import Crypto from "./crypto";
+import Info from "./info";
+import SlideTokens from "./slide-tokens";
+import Tokens from "./tokens";
 
 const HomePage = () => {
   return (
@@ -9,9 +14,13 @@ const HomePage = () => {
       <Container className="max-w-[1392px] px-10 pt-[104px] relative">
         <div>
           <div className="mt-[50px]">
-            <div className="grid grid-cols-1 gap-[80px] md:gap-[112px] xl:gap-[152px]">
-              {/* Banner*/}
+            <div className="grid grid-cols-1 gap-[60px] md:gap-[80px] xl:gap-[110px]">
               <Banner />
+              <Info />
+              <Assets />
+              <SlideTokens />
+              <Tokens />
+              <Crypto />
             </div>
           </div>
         </div>
