@@ -90,13 +90,13 @@ const SlideTokens = () => {
         </CarouselContent>
         {/* button */}
         <div className="flex justify-center items-center mt-3">
-          <button type="button" className="rounded-full h-[40px] w-[40px] ">
+          <div className="rounded-full h-[40px] w-[40px] ">
             <CarouselPrevious />
-          </button>
+          </div>
           <CarouselDots />
-          <button type="button" className="rounded-full h-[40px] w-[40px] ">
+          <div className="rounded-full h-[40px] w-[40px] ">
             <CarouselNext />
-          </button>
+          </div>
         </div>
       </Carousel>
     </div>
