@@ -4,9 +4,12 @@ import { useAuth } from "../../contexts/authContext";
 import { useEffect } from "react";
 import Method from "@/components/layout/method";
 import { ShieldAlert } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const WalletCreate = () => {
   const { setInCreateWallet } = useAuth();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setInCreateWallet(true);
@@ -63,7 +66,10 @@ const WalletCreate = () => {
 
                 <span className="font-bold">NOT RECOMMENDED</span>
               </div>
-              <button className="h-auto min-h-[157px] p-4 bg-transparent tracking-[.5px] rounded-[10px] mb-5 flex items-center justify-center w-full hoverOpacity  hover:bg-white hover:bg-opacity-10  shadow border-2 border-white">
+              <button
+                className="h-auto min-h-[157px] p-4 bg-transparent tracking-[.5px] rounded-[10px] mb-5 flex items-center justify-center w-full hoverOpacity  hover:bg-white hover:bg-opacity-10  shadow border-2 border-white"
+                onClick={() => navigate("/wallet/create/software")}
+              >
                 <span className="max-w-full flex flex-auto text-white items-center  text-left ">
                   <div className="px-3">
                     <div className="flex items-center font-bold text-xl ">
