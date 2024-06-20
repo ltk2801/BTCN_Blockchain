@@ -2,7 +2,7 @@ import React from "react";
 
 import { useNavigate } from "react-router-dom";
 
-const MethodSoftware = ({ title, icon, content }) => {
+const MethodSoftware = ({ title, icon, content, access }) => {
   const navigate = useNavigate();
 
   return (
@@ -10,7 +10,13 @@ const MethodSoftware = ({ title, icon, content }) => {
       className="px-8 py-6 border border-gray-200 rounded-xl shadow-sm mb-6 cursor-pointer hoverOpacity hover:bg-gray-100 hover:shadow "
       onClick={() => {
         if (title === "Private Key") {
-          navigate("/wallet/create/software/private-key");
+          if (access) {
+            navigate("/wallet/access/software/private-key");
+          } else {
+            navigate("/wallet/create/software/private-key");
+          }
+        } else {
+          return;
         }
       }}
     >

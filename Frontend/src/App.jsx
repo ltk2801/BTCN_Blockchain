@@ -11,6 +11,7 @@ import WalletCreate from "./pages/create-wallet-page";
 import SoftwareCreate from "./pages/create-wallet-page/softwareCreate";
 import SoftwareAccess from "./pages/access-wallet-page/softwareAccess";
 import PrivateKeyCreate from "./pages/create-wallet-page/private-key-create";
+import PrivateKeyAccess from "./pages/access-wallet-page/private-key-accsess";
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/wallet/access" element={<WalletAccess />} />
         <Route path="/wallet/access/software" element={<SoftwareAccess />} />
+        <Route
+          path="/wallet/access/software/private-key"
+          element={<PrivateKeyAccess />}
+        />
         <Route path="/wallet/create" element={<WalletCreate />} />
         <Route path="/wallet/create/software" element={<SoftwareCreate />} />
         <Route

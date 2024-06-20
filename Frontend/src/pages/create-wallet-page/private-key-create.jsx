@@ -3,12 +3,10 @@ import Container from "@/components/layout/container";
 import Warning from "@/components/layout/warning";
 import { useAuth } from "../../contexts/authContext";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const PrivateKeyCreate = () => {
   const { setInCreateWallet } = useAuth();
 
-  const navigate = useNavigate();
   useEffect(() => {
     setInCreateWallet(true);
     return () => setInCreateWallet(false); // Reset the state when the component is unmounted
