@@ -6,8 +6,11 @@ import Crypto from "./crypto";
 import Info from "./info";
 import SlideTokens from "./slide-tokens";
 import Tokens from "./tokens";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="relative bg-gradient-to-b  via-appBackground bg-[center_top_710px] mb-10 ">
       <div className="absolute top-0 inset-x-0 flex justify-center overflow-hidden bg-[url('https://www.myetherwallet.com/mew-landing-page/_nuxt/bg-home.ChGNDbs1.png')] bg-bottom bg-no-repeat bg-cover h-[710px] -z-30 " />
@@ -31,7 +34,10 @@ const HomePage = () => {
                   />
                 </h2>
                 <div className="relative">
-                  <button className="block bg-blue-700 rounded-[20px] text-2xl text-white font-bold hoverOpacity px-8 py-5 hover:bg-blue-500 ">
+                  <button
+                    className="block bg-blue-700 rounded-[20px] text-2xl text-white font-bold hoverOpacity px-8 py-5 hover:bg-blue-500 "
+                    onClick={() => navigate("/wallet/create")}
+                  >
                     Create a new wallet
                   </button>
                 </div>

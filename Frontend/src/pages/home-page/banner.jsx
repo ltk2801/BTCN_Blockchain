@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="relative">
       <img
@@ -44,13 +47,16 @@ const Banner = () => {
       </h1>
       <div className="flex items-center justify-center">
         <div>
-          <button className="block bg-blue-700 rounded-[20px] text-2xl text-white font-bold hoverOpacity px-8 py-5 hover:bg-blue-500 ">
+          <button
+            className="block bg-blue-700 rounded-[20px] text-2xl text-white font-bold hoverOpacity px-8 py-5 hover:bg-blue-500 "
+            onClick={() => navigate("/wallet/create")}
+          >
             Create a new wallet
           </button>
           <p className="text-center mt-3">
             or
             <a
-              href="/"
+              href="/wallet/access"
               className="underline hoverOpacity text-base text-slate-700 ml-2 font-semibold tracking-wide"
             >
               Access my wallet

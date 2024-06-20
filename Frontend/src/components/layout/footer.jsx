@@ -15,7 +15,7 @@ import {
 const Footer = () => {
   return (
     <div className="max-w-full bg-gradient-to-r from-zinc-50 to-zinc-100 shadow-lg rounded-lg p-6">
-      <div className="max-w-[1392px] px-10 mx-auto pt-[80px] mb-5 ">
+      <div className="max-w-[1392px] px-10 mx-auto pt-[40px] mb-5 ">
         <div className="grid grid-cols-1 gap-[42px]">
           <div className="grid grid-cols-1 md:grid-cols-4 justify-items-start content-start gap-[80px] text-slate-700">
             <div className="grid grid-cols-1 gap-3 content-start">

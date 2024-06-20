@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Container from "./container";
 
 import {
   NavigationMenu,
@@ -9,11 +8,16 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { useAuth } from "@/contexts/authContext";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+
+  const navigate = useNavigate();
+
+  const { inAccessWallet, inCreateWallet } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,7 +38,9 @@ const Header = () => {
     <header className={`fixed w-full z-10 h-[104px] py-5  `}>
       <div
         className={` max-w-[1392px] h-full mx-auto rounded-[52px] transition-all duration-500 ${
-          scrolled ? "bg-white-95 shadow-md" : "bg-transparent"
+          scrolled || inAccessWallet || inCreateWallet
+            ? "bg-white-95 shadow-md"
+            : "bg-transparent"
         } `}
       >
         <div className="flex flex-row items-center justify-between p-4 my-auto h-full">
@@ -188,12 +194,20 @@ const Header = () => {
             </>
           </div>
           {/* button */}
+
           <div className="flex-none">
-            <button className="flex items-center justify-center w-[190px] text-center px-4 py-2 bg-black text-white h-10 rounded-3xl hoverOpacity hover:bg-slate-400">
-              <span className="text-lg text-center font-medium tracking-[.6px] ">
-                Access my wallet
-              </span>
-            </button>
+            {inAccessWallet ? (
+              <> </>
+            ) : (
+              <button
+                className="flex items-center justify-center w-[190px] text-center px-4 py-2 bg-black text-white h-10 rounded-3xl hoverOpacity hover:bg-slate-400"
+                onClick={() => navigate("/wallet/access")}
+              >
+                <span className="text-lg text-center font-medium tracking-[.6px] ">
+                  Access my wallet
+                </span>
+              </button>
+            )}
           </div>
         </div>
       </div>
