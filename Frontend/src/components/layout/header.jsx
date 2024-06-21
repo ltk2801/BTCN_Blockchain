@@ -201,10 +201,10 @@ const Header = () => {
             ) : currentWallet ? (
               <button
                 className="flex items-center justify-center w-[190px] text-center px-4 py-2 bg-black text-white h-10 rounded-3xl hoverOpacity  hover:opacity-60"
-                onClick={() => navigate("/wallet/etherscan")}
+                onClick={() => navigate("/wallet/dashboard")}
               >
                 <span className="text-lg text-center font-medium tracking-[.6px] ">
-                  Etherscan
+                  Dashboard
                 </span>
               </button>
             ) : (

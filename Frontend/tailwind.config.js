@@ -56,6 +56,10 @@ module.exports = {
         "green-access": "#05c0a5",
         "beige-100": "#f5f5dc",
         "orange-access": "#f5a623",
+        "wallet-base": "#f2f4fa",
+        "base-sidebar": "#07385f",
+        "wallet-sidebar": "hsla(0, 0%, 100%, .1)",
+        "blue-trans": "#0784C3",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -91,6 +95,10 @@ module.exports = {
             "rgba(245,245,247,0) var(--tw-gradient-to-position)",
           "--tw-gradient-stops":
             "var(--tw-gradient-from), #f5f5f7 var(--tw-gradient-via-position), var(--tw-gradient-to)",
+        },
+        ".text-shadow": {
+          textShadow:
+            "0 2px 8px rgba(0, 0, 0, .24), 0 1px 4px rgba(0, 0, 0, .24)",
         },
       };
 

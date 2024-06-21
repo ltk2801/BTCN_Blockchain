@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Footer from "./components/layout/footer";
-import Header from "./components/layout/header";
+
 import ScrollToTop from "./components/layout/scroll-to-top";
 import WalletAccess from "./pages/access-wallet-page";
 import HomePage from "./pages/home-page";
@@ -14,13 +13,13 @@ import PrivateKeyCreate from "./pages/create-wallet-page/private-key-create";
 import PrivateKeyAccess from "./pages/access-wallet-page/private-key-accsess";
 
 import ProtectedRoute from "./lib/protectRoute";
+import WalletDashboard from "./pages/wallet-dashboard";
 
 function App() {
   return (
     <AuthProvider>
       <ToastContainerNotification />
       <ScrollToTop />
-      <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
@@ -73,8 +72,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/wallet/dashboard" element={<WalletDashboard />} />
       </Routes>
-      <Footer />
     </AuthProvider>
   );
 }
