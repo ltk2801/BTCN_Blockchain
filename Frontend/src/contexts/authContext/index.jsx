@@ -7,15 +7,26 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentWallet, setCurrentWalletState] = useState(null);
 
   const [inCreateWallet, setInCreateWallet] = useState(false);
 
   const [inAccessWallet, setInAccessWallet] = useState(false);
+  useEffect(() => {
+    const walletFromStorage = JSON.parse(localStorage.getItem("currentWallet"));
+    if (walletFromStorage) {
+      setCurrentWalletState(walletFromStorage);
+    }
+  }, []);
+
+  const setCurrentWallet = (wallet) => {
+    setCurrentWalletState(wallet);
+    localStorage.setItem("currentWallet", JSON.stringify(wallet));
+  };
 
   const value = {
-    setCurrentUser,
-    currentUser,
+    setCurrentWallet,
+    currentWallet,
     setInCreateWallet,
     setInAccessWallet,
     inCreateWallet,

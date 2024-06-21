@@ -7,9 +7,11 @@ import Info from "./info";
 import SlideTokens from "./slide-tokens";
 import Tokens from "./tokens";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/authContext";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { currentWallet } = useAuth();
 
   return (
     <div className="relative bg-gradient-to-b  via-appBackground bg-[center_top_710px] mb-10 ">
@@ -18,7 +20,7 @@ const HomePage = () => {
         <div>
           <div className="mt-[50px]">
             <div className="grid grid-cols-1 gap-[60px] md:gap-[80px] xl:gap-[110px]">
-              <Banner />
+              <Banner currentWallet={currentWallet} />
               <Info />
               <Assets />
               <SlideTokens />
@@ -33,14 +35,16 @@ const HomePage = () => {
                     className="absolute top-[-30px] sm:top-[-39px] xl:top-[-46px] left-[-15px] xl:left-[-18px] h-[56px] sm:h-[76px] xl:h-[96px]"
                   />
                 </h2>
-                <div className="relative">
-                  <button
-                    className="block bg-blue-700 rounded-[20px] text-2xl text-white font-bold hoverOpacity px-8 py-5 hover:bg-blue-500 "
-                    onClick={() => navigate("/wallet/create")}
-                  >
-                    Create a new wallet
-                  </button>
-                </div>
+                {!currentWallet && (
+                  <div className="relative">
+                    <button
+                      className="block bg-blue-700 rounded-[20px] text-2xl text-white font-bold hoverOpacity px-8 py-5 hover:bg-blue-500 "
+                      onClick={() => navigate("/wallet/create")}
+                    >
+                      Create a new wallet
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

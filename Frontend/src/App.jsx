@@ -13,6 +13,8 @@ import SoftwareAccess from "./pages/access-wallet-page/softwareAccess";
 import PrivateKeyCreate from "./pages/create-wallet-page/private-key-create";
 import PrivateKeyAccess from "./pages/access-wallet-page/private-key-accsess";
 
+import ProtectedRoute from "./lib/protectRoute";
+
 function App() {
   return (
     <AuthProvider>
@@ -21,17 +23,55 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/wallet/access" element={<WalletAccess />} />
-        <Route path="/wallet/access/software" element={<SoftwareAccess />} />
+        <Route
+          path="/wallet/access"
+          element={
+            <ProtectedRoute>
+              {" "}
+              <WalletAccess />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/wallet/access/software"
+          element={
+            <ProtectedRoute>
+              <SoftwareAccess />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/wallet/access/software/private-key"
-          element={<PrivateKeyAccess />}
+          element={
+            <ProtectedRoute>
+              <PrivateKeyAccess />
+            </ProtectedRoute>
+          }
         />
-        <Route path="/wallet/create" element={<WalletCreate />} />
-        <Route path="/wallet/create/software" element={<SoftwareCreate />} />
+        <Route
+          path="/wallet/create"
+          element={
+            <ProtectedRoute>
+              {" "}
+              <WalletCreate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/wallet/create/software"
+          element={
+            <ProtectedRoute>
+              <SoftwareCreate />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/wallet/create/software/private-key"
-          element={<PrivateKeyCreate />}
+          element={
+            <ProtectedRoute>
+              <PrivateKeyCreate />
+            </ProtectedRoute>
+          }
         />
       </Routes>
       <Footer />

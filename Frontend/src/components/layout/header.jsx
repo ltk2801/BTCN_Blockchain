@@ -17,7 +17,7 @@ const Header = () => {
 
   const navigate = useNavigate();
 
-  const { inAccessWallet, inCreateWallet } = useAuth();
+  const { inAccessWallet, inCreateWallet, currentWallet } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -198,6 +198,15 @@ const Header = () => {
           <div className="flex-none">
             {inAccessWallet ? (
               <> </>
+            ) : currentWallet ? (
+              <button
+                className="flex items-center justify-center w-[190px] text-center px-4 py-2 bg-black text-white h-10 rounded-3xl hoverOpacity  hover:opacity-60"
+                onClick={() => navigate("/wallet/etherscan")}
+              >
+                <span className="text-lg text-center font-medium tracking-[.6px] ">
+                  Etherscan
+                </span>
+              </button>
             ) : (
               <button
                 className="flex items-center justify-center w-[190px] text-center px-4 py-2 bg-black text-white h-10 rounded-3xl hoverOpacity  hover:opacity-60"

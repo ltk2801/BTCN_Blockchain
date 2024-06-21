@@ -20,7 +20,7 @@ const PrivateKeyCreate = () => {
       setPrivateKey(res.data.privateKey);
       toast.success("Create Wallet successfully ! ");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }

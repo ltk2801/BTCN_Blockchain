@@ -4,14 +4,17 @@ import Warning from "@/components/layout/warning";
 import { useAuth } from "../../contexts/authContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Axios from "@/lib/APIs/Axios";
 
 const PrivateKeyAccess = () => {
-  const { setInAccessWallet } = useAuth();
+  const { setInAccessWallet, setCurrentWallet } = useAuth();
 
   const navigate = useNavigate();
 
   const [privateKey, setPrivateKey] = useState("");
   const [privateKeyError, setPrivateKeyError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [check, setCheck] = useState(false);
 
@@ -27,6 +30,21 @@ const PrivateKeyAccess = () => {
     } else {
       setPrivateKeyError("");
       return true;
+    }
+  };
+
+  const handleAccessWallet = async () => {
+    setLoading(true);
+    try {
+      const res = await Axios.post("/api/wallet/access", {
+        privateKey,
+      });
+      setCurrentWallet(res.data.wallet);
+      toast.success("Access wallet successfully !");
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -115,13 +133,14 @@ const PrivateKeyAccess = () => {
               <div className="flex flex-col items-center w-full gap-3">
                 <button
                   className={`block ${
-                    privateKeyError || !check || !privateKey
+                    privateKeyError || !check || !privateKey || loading
                       ? "bg-gray-300 text-gray-500 cursor-not-allowed "
                       : "bg-sky-700 text-white hover:opacity-80 hoverOpacity"
                   }  w-[300px] rounded-xl text-base font-bold  py-3 uppercase tracking-wider`}
-                  disabled={privateKeyError || !check}
+                  disabled={privateKeyError || !check || loading}
+                  onClick={handleAccessWallet}
                 >
-                  access wallet
+                  {loading ? "accessing..." : "access wallet"}
                 </button>
               </div>
             </div>

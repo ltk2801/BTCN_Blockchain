@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Banner = () => {
+const Banner = ({ currentWallet }) => {
   const navigate = useNavigate();
 
   return (
@@ -45,25 +45,27 @@ const Banner = () => {
       <h1 className="text-7xl font-[700] tracking-tight text-slate-700 text-center mx-auto mb-8 sm:mb-10 max-w-[400px] md:max-w-[1088px]  ">
         The most reputable, friendly, and secure crypto wallet.
       </h1>
-      <div className="flex items-center justify-center">
-        <div>
-          <button
-            className="block bg-blue-700 rounded-[20px] text-2xl text-white font-bold hoverOpacity px-8 py-5 hover:bg-blue-500 "
-            onClick={() => navigate("/wallet/create")}
-          >
-            Create a new wallet
-          </button>
-          <p className="text-center mt-3">
-            or
-            <a
-              href="/wallet/access"
-              className="underline hoverOpacity text-base text-slate-700 ml-2 font-semibold tracking-wide"
+      {!currentWallet && (
+        <div className="flex items-center justify-center">
+          <div>
+            <button
+              className="block bg-blue-700 rounded-[20px] text-2xl text-white font-bold hoverOpacity px-8 py-5 hover:bg-blue-500 "
+              onClick={() => navigate("/wallet/create")}
             >
-              Access my wallet
-            </a>
-          </p>
+              Create a new wallet
+            </button>
+            <p className="text-center mt-3">
+              or
+              <a
+                href="/wallet/access"
+                className="underline hoverOpacity text-base text-slate-700 ml-2 font-semibold tracking-wide"
+              >
+                Access my wallet
+              </a>
+            </p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
