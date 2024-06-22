@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Copy } from "lucide-react";
+import BuySellModal from "./Modal/buy-sell-modal";
 
 const SidebarMenu = () => {
+  const [openModalBuySell, setOpenModalBuySell] = useState(false);
+
+  const handleOpenModalBuySell = () => {
+    setOpenModalBuySell(true);
+  };
+
   return (
     <div>
       <nav className="h-[100vh] top-0 fixed translate-x-0 w-[340px] max-h-[100%] bg-base-sidebar border border-base-sidebar z-[6] flex flex-col left-0 max-w-[100%] overflow-hidden pointer-events-auto ">
@@ -90,7 +97,10 @@ const SidebarMenu = () => {
             </div>
           </div>
         </div>
-        <div className="py-3 px-4 text-shadow hover:bg-white hover:bg-opacity-10 cursor-pointer hover:shadow-sm ">
+        <div
+          className="py-3 px-4 text-shadow hover:bg-white hover:bg-opacity-10 cursor-pointer hover:shadow-sm "
+          onClick={handleOpenModalBuySell}
+        >
           <div className="flex items-center ">
             <div className="basis-1/4 flex justify-center">
               <img
@@ -134,6 +144,9 @@ const SidebarMenu = () => {
           </div>
         </div>
       </nav>
+      {openModalBuySell && (
+        <BuySellModal onClose={() => setOpenModalBuySell(false)} />
+      )}
     </div>
   );
 };

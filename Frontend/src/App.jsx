@@ -14,6 +14,7 @@ import PrivateKeyAccess from "./pages/access-wallet-page/private-key-accsess";
 
 import ProtectedRoute from "./lib/protectRoute";
 import WalletDashboard from "./pages/wallet-dashboard";
+import BlockDetail from "./pages/wallet-dashboard/blockDetail";
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
           }
         />
         <Route path="/wallet/dashboard" element={<WalletDashboard />} />
+        <Route path="/wallet/dashboard/block/:id" element={<BlockDetail />} />
       </Routes>
     </AuthProvider>
   );

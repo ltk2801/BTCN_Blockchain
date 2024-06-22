@@ -14,7 +14,7 @@ const data = [
 
 const LatestBlocks = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 6;
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
@@ -36,7 +36,7 @@ const LatestBlocks = () => {
   return (
     <div className="basis-1/2 p-4">
       {/* title */}
-      <h2 className="text-3xl font-bold text-slate-700 tracking-wide border-l-[6px] border-blue-access pl-2 mb-6">
+      <h2 className="text-3xl font-bold text-slate-700 tracking-wide border-l-[6px] border-blue-trans pl-2 mb-6">
         Latest Blocks
       </h2>
       {/* table */}
@@ -62,7 +62,10 @@ const LatestBlocks = () => {
             <div className="basis-1/3 flex justify-start">
               <div className="flex items-center gap-2">
                 <Box className="w-8 h-8" />
-                <a href="/" className="text-blue-trans underline font-medium">
+                <a
+                  href={`/wallet/dashboard/block/${dt.blockHeight}`}
+                  className="text-blue-trans underline font-medium"
+                >
                   {dt.blockHeight}
                 </a>
                 <span className="text-sm text-slate-400">(1 mins ago)</span>
