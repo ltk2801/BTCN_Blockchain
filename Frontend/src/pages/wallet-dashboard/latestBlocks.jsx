@@ -78,7 +78,7 @@ const LatestBlocks = () => {
             </div>
             <div className="basis-1/3 flex justify-end">
               <div className="flex items-center justify-center px-3 py-[2px] border border-slate-300 rounded-2xl shadow-sm font-medium">
-                {dt.blockReward} Eth
+                {dt.blockReward} ETH
               </div>
             </div>
           </div>

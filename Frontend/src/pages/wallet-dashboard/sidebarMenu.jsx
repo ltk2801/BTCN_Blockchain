@@ -1,9 +1,26 @@
 import React, { useState } from "react";
 import { Copy } from "lucide-react";
-import BuySellModal from "./Modal/buy-sell-modal";
+import BuySellModal from "./modal/buy-sell-modal";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/contexts/authContext";
 
 const SidebarMenu = () => {
   const [openModalBuySell, setOpenModalBuySell] = useState(false);
+  const { logout } = useAuth();
+
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
+  // Kiểm tra nếu location.pathname chứa '/wallet/dashboard' thì activeClass = 'active'
+  const dashboardActive = location.pathname.includes("/wallet/dashboard")
+    ? true
+    : false;
+  // Kiểm tra nếu location.pathname chứa '/wallet/send' thì activeClass = 'active'
+  const sendActive = location.pathname.includes("/wallet/send") ? true : false;
+
+  // Kiểm tra nếu location.pathname chứa '/wallet/mine' thì activeClass = 'active'
+  const mineActive = location.pathname.includes("/wallet/mine") ? true : false;
 
   const handleOpenModalBuySell = () => {
     setOpenModalBuySell(true);
@@ -54,7 +71,14 @@ const SidebarMenu = () => {
         </div>
         {/* Etherscan */}
 
-        <div className="py-3 px-4 bg-white bg-opacity-10 text-shadow ">
+        <div
+          className={`py-3 px-4 text-shadow cursor-pointer ${
+            dashboardActive
+              ? "bg-white bg-opacity-10  "
+              : "hover:bg-white hover:bg-opacity-10 hover:shadow-sm "
+          }  `}
+          onClick={() => navigate("/wallet/dashboard")}
+        >
           <div className="flex items-center ">
             <div className="basis-1/4 flex justify-center">
               <img
@@ -64,12 +88,27 @@ const SidebarMenu = () => {
               />
             </div>
             <div className="basis-3/4">
-              <p className="text-white font-medium text-base ">Etherscan</p>
+              <p
+                className={`${
+                  dashboardActive
+                    ? " text-white font-medium text-base"
+                    : "text-white-95 font-light text-base"
+                }`}
+              >
+                Etherscan
+              </p>
             </div>
           </div>
         </div>
         <hr className="my-3 mx-4 border-wallet-sidebar border" />
-        <div className="py-3 px-4 text-shadow hover:bg-white hover:bg-opacity-10 cursor-pointer hover:shadow-sm">
+        <div
+          className={`py-3 px-4 text-shadow cursor-pointer ${
+            sendActive
+              ? "bg-white bg-opacity-10 "
+              : "hover:bg-white hover:bg-opacity-10 hover:shadow-sm "
+          }  `}
+          onClick={() => navigate("/wallet/send")}
+        >
           <div className="flex items-center ">
             <div className="basis-1/4 flex justify-center">
               <img
@@ -79,7 +118,15 @@ const SidebarMenu = () => {
               />
             </div>
             <div className="basis-3/4">
-              <p className="text-white-95 font-light text-base">Send</p>
+              <p
+                className={`${
+                  sendActive
+                    ? " text-white font-medium text-base"
+                    : "text-white-95 font-light text-base"
+                }`}
+              >
+                Send
+              </p>
             </div>
           </div>
         </div>
@@ -114,7 +161,14 @@ const SidebarMenu = () => {
             </div>
           </div>
         </div>
-        <div className="py-3 px-4 text-shadow hover:bg-white hover:bg-opacity-10 cursor-pointer hover:shadow-sm ">
+        <div
+          className={`py-3 px-4 text-shadow cursor-pointer ${
+            mineActive
+              ? "bg-white bg-opacity-10 "
+              : "hover:bg-white hover:bg-opacity-10 hover:shadow-sm "
+          }  `}
+          onClick={() => navigate("/wallet/mine")}
+        >
           <div className="flex items-center ">
             <div className="basis-1/4 flex justify-center">
               <img
@@ -124,12 +178,23 @@ const SidebarMenu = () => {
               />
             </div>
             <div className="basis-3/4">
-              <p className="text-white-95 font-light text-base">Mine</p>
+              <p
+                className={`${
+                  mineActive
+                    ? " text-white font-medium text-base"
+                    : "text-white-95 font-light text-base"
+                }`}
+              >
+                Mine
+              </p>
             </div>
           </div>
         </div>
         <hr className="my-8 mx-4 border-wallet-sidebar border" />
-        <div className="py-3 px-4 text-shadow hover:bg-white hover:bg-opacity-10 cursor-pointer hover:shadow-sm ">
+        <div
+          className="py-3 px-4 text-shadow hover:bg-white hover:bg-opacity-10 cursor-pointer hover:shadow-sm  "
+          onClick={logout}
+        >
           <div className="flex items-center ">
             <div className="basis-1/4 flex justify-center">
               <img

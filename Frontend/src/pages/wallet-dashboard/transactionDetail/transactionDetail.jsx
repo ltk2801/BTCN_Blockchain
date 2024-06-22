@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import SidebarMenu from "./sidebarMenu";
+import SidebarMenu from "../sidebarMenu";
 import { ArrowLeft, CircleHelp } from "lucide-react";
 import {
   Tooltip,
@@ -9,7 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-const BlockDetail = () => {
+const TransactionDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -37,17 +37,17 @@ const BlockDetail = () => {
           </div>
           {/* content */}
           <div className="mt-20 p-8 border border-slate-300 rounded-xl shadow-sm bg-white">
-            <div className="flex flex-col justify-center gap-8">
+            <div className="flex flex-col justify-center gap-12">
               <div className="flex items-center">
                 <div className="basis-1/4 flex items-center gap-2">
                   <CircleHelp className="h-5 w-5" />
                   <span className="font-medium text-slate-700">
-                    Block Height :
+                    Transaction Hash :
                   </span>
                 </div>
                 <div>
                   <span className="basis-1/4 font-medium text-slate-700">
-                    1
+                    0x2b3c4d5e6f7g8h9i0j1k
                   </span>
                 </div>
               </div>
@@ -59,7 +59,7 @@ const BlockDetail = () => {
                 </div>
                 <div>
                   <span className="basis-1/4  font-medium flex items-center justify-center px-3 py-[2px] border border-green-access text-green-access rounded-3xl shadow-sm">
-                    Finalized
+                    Pending
                   </span>
                 </div>
               </div>
@@ -72,26 +72,40 @@ const BlockDetail = () => {
                 </div>
                 <div>
                   <span className=" basis-1/4  font-medium text-slate-700">
-                    1 mins ago (May-20-2024 12:18:40 AM +UTC)
+                    7 secs ago (May-20-2024 12:18:40 AM +UTC)
                   </span>
                 </div>
               </div>
               <div className="flex items-center ">
                 <div className="basis-1/4  flex items-center gap-2">
                   <CircleHelp className="h-5 w-5" />
-                  <span className="font-medium text-slate-700">
-                    Transactions :
-                  </span>
+                  <span className="font-medium text-slate-700">From:</span>
                 </div>
                 <div>
                   <span className="basis-1/4  font-medium text-slate-700">
-                    <a
-                      href="/wallet/dashboard"
-                      className="underline text-blue-trans mr-1 font-bold"
-                    >
-                      0 transactions
-                    </a>
-                    in this block
+                    0xb2c3d4e5f6g7h8i9j0k1l2
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center ">
+                <div className="basis-1/4  flex items-center gap-2">
+                  <CircleHelp className="h-5 w-5" />
+                  <span className="font-medium text-slate-700">To:</span>
+                </div>
+                <div>
+                  <span className="basis-1/4  font-medium text-slate-700">
+                    0x2b3c4d5e6f7g8h9i0j1k2l3
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center ">
+                <div className="basis-1/4  flex items-center gap-2">
+                  <CircleHelp className="h-5 w-5" />
+                  <span className="font-medium text-slate-700">Value:</span>
+                </div>
+                <div>
+                  <span className="basis-1/4   text-slate-700 flex items-center justify-center px-3 py-[2px] border border-slate-300 rounded-2xl shadow-sm font-medium">
+                    0.1 ETH
                   </span>
                 </div>
               </div>
@@ -99,12 +113,12 @@ const BlockDetail = () => {
                 <div className="basis-1/4  flex items-center gap-2">
                   <CircleHelp className="h-5 w-5" />
                   <span className="font-medium text-slate-700">
-                    Block Reward :
+                    Transaction Fee:
                   </span>
                 </div>
                 <div>
                   <span className="basis-1/4   text-slate-700 flex items-center justify-center px-3 py-[2px] border border-slate-300 rounded-2xl shadow-sm font-medium">
-                    0.1 Eth
+                    0.000256 ETH
                   </span>
                 </div>
               </div>
@@ -128,4 +142,4 @@ const BlockDetail = () => {
   );
 };
 
-export default BlockDetail;
+export default TransactionDetail;

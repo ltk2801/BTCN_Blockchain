@@ -14,7 +14,11 @@ import PrivateKeyAccess from "./pages/access-wallet-page/private-key-accsess";
 
 import ProtectedRoute from "./lib/protectRoute";
 import WalletDashboard from "./pages/wallet-dashboard";
-import BlockDetail from "./pages/wallet-dashboard/blockDetail";
+import BlockDetail from "./pages/wallet-dashboard/blockDetail/blockDetail";
+import SendToken from "./pages/wallet-dashboard/sendToken";
+import TransactionDetail from "./pages/wallet-dashboard/transactionDetail/transactionDetail";
+import Mempool from "./pages/wallet-dashboard/mine/mempool";
+import ProtectedRouteUser from "./lib/protectRouteUser";
 
 function App() {
   return (
@@ -73,8 +77,51 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/wallet/dashboard" element={<WalletDashboard />} />
-        <Route path="/wallet/dashboard/block/:id" element={<BlockDetail />} />
+        <Route
+          path="/wallet/dashboard"
+          element={
+            <ProtectedRouteUser>
+              {" "}
+              <WalletDashboard />{" "}
+            </ProtectedRouteUser>
+          }
+        />
+        <Route
+          path="/wallet/dashboard/block/:id"
+          element={
+            <ProtectedRouteUser>
+              {" "}
+              <BlockDetail />{" "}
+            </ProtectedRouteUser>
+          }
+        />
+        <Route
+          path="/wallet/send"
+          element={
+            <ProtectedRouteUser>
+              {" "}
+              <SendToken />{" "}
+            </ProtectedRouteUser>
+          }
+        />
+        <Route
+          path="wallet/dashboard/transaction/:id"
+          element={
+            <ProtectedRouteUser>
+              {" "}
+              <TransactionDetail />{" "}
+            </ProtectedRouteUser>
+          }
+        />
+        <Route
+          path="/wallet/mine"
+          element={
+            <ProtectedRouteUser>
+              {" "}
+              <Mempool />{" "}
+            </ProtectedRouteUser>
+          }
+        />
       </Routes>
     </AuthProvider>
   );

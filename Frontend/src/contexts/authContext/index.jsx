@@ -24,6 +24,13 @@ export function AuthProvider({ children }) {
     localStorage.setItem("currentWallet", JSON.stringify(wallet));
   };
 
+  const logout = () => {
+    setCurrentWalletState(null);
+    localStorage.removeItem("currentWallet");
+    setInCreateWallet(false);
+    setInAccessWallet(false);
+  };
+
   const value = {
     setCurrentWallet,
     currentWallet,
@@ -31,6 +38,7 @@ export function AuthProvider({ children }) {
     setInAccessWallet,
     inCreateWallet,
     inAccessWallet,
+    logout,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
