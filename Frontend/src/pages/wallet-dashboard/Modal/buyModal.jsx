@@ -1,10 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useAuth } from "@/contexts/authContext";
+import { toast } from "react-toastify";
+import Axios from "@/lib/APIs/Axios";
 
-const BuyModal = () => {
+const BuyModal = ({ onClose }) => {
+  const { currentWallet, setCurrentWallet } = useAuth();
   const [amountEth, setAmountEth] = useState("");
   const [money, setMoney] = useState("");
 
   const [moneyError, setMoneyError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const validateMoney = (money) => {
     if (!money) {
@@ -13,8 +18,8 @@ const BuyModal = () => {
     } else if (money <= 50) {
       setMoneyError("Amount can't be below provider's minimum $50.00 USD");
       return false;
-    } else if (money >= 100000) {
-      setMoneyError("Amount can't be below provider's maximum $100000.00 USD");
+    } else if (money >= 1000000) {
+      setMoneyError("Amount can't be below provider's maximum $1000000.00 USD");
       return false;
     } else {
       setMoneyError("");
@@ -32,6 +37,32 @@ const BuyModal = () => {
 
     const amountEthValue = moneyValue / ethPrice;
     setAmountEth(amountEthValue.toFixed(6)); // Limit to 6 decimal places
+  };
+
+  const handeleBuyEth = async () => {
+    setLoading(true);
+    try {
+      const res = await Axios.post("/api/wallet/deposit", {
+        address: currentWallet.address,
+        usdAmount: money,
+      });
+
+      const getBalance = await Axios.get(
+        `/api/wallet/balance/${currentWallet.address}`
+      );
+
+      const updateWallet = {
+        address: currentWallet.address,
+        balance: getBalance.data.balance,
+      };
+      setCurrentWallet(updateWallet);
+      toast.success("Buy ETH successfully !");
+      onClose();
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -110,10 +141,12 @@ const BuyModal = () => {
         </div>
       </div>
       {/* button */}
-      {!moneyError && (
+      {!moneyError && money && (
         <div className="mx-4 mt-4 flex justify-center">
           <button
             className={`block bg-sky-700 text-white hover:opacity-80 hoverOpacity  w-[100px] rounded-xl text-base font-bold  py-3 uppercase tracking-wider`}
+            onClick={handeleBuyEth}
+            disabled={loading}
           >
             Buy
           </button>

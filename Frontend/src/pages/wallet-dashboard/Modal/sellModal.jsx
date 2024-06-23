@@ -101,7 +101,7 @@ const SellModal = () => {
         </div>
       </div>
       {/* button */}
-      {!amountEthError && (
+      {!amountEthError && amountEth && (
         <div className="mx-4 mt-4 flex justify-center">
           <button
             className={`block bg-gray-300 text-gray-500 cursor-not-allowed   hover:opacity-80 hoverOpacity  w-[100px] rounded-xl text-base font-bold  py-3 uppercase tracking-wider`}

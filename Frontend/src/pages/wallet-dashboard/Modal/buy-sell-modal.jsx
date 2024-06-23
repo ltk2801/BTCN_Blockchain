@@ -64,7 +64,7 @@ const BuySellModal = ({ onClose }) => {
           </div>
         </div>
         {/* Content */}
-        {activeTab === "buy" ? <BuyModal /> : <SellModal />}
+        {activeTab === "buy" ? <BuyModal onClose={onClose} /> : <SellModal />}
       </div>
     </div>
   );

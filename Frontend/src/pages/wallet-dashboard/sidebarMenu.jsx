@@ -3,10 +3,17 @@ import { Copy } from "lucide-react";
 import BuySellModal from "./modal/buy-sell-modal";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/authContext";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { toast } from "react-toastify";
 
 const SidebarMenu = () => {
   const [openModalBuySell, setOpenModalBuySell] = useState(false);
-  const { logout } = useAuth();
+  const { logout, currentWallet } = useAuth();
 
   const navigate = useNavigate();
 
@@ -24,6 +31,34 @@ const SidebarMenu = () => {
 
   const handleOpenModalBuySell = () => {
     setOpenModalBuySell(true);
+  };
+
+  // Function to mask the middle part of the address
+  const maskAddress = (address) => {
+    if (!address) return "";
+
+    const visibleChars = 10; // Number of characters visible at start and end
+    const start = address.slice(0, visibleChars);
+    const end = address.slice(-visibleChars);
+    const maskedMiddle = "...";
+
+    return `${start}${maskedMiddle}${end}`;
+  };
+
+  const toFixed2 = (usd) => {
+    return Number(usd).toFixed(2);
+  };
+  const toFixed4 = (eth) => {
+    return Number(eth).toFixed(4);
+  };
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(currentWallet.address);
+      toast.success("Private key copied to clipboard!");
+    } catch (error) {
+      toast.error("Failed to copy private key to clipboard.");
+    }
   };
 
   return (
@@ -51,19 +86,36 @@ const SidebarMenu = () => {
             <div className="pl-8 pr-5 py-4 text-shadow rounded-2xl w-full relative min-h-[172px] top-0 left-0 z-1 flex flex-col justify-between">
               {/* address */}
               <div className="flex justify-between items-start">
-                <p className="text-white text-base font-medium">bababababab</p>
+                <p className="text-white text-base font-medium">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        {" "}
+                        {maskAddress(currentWallet.address)}
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-slate-700 text-white items-center">
+                        <span>{currentWallet.address}</span>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </p>
               </div>
               {/* Balance USD */}
               <div className="ml-[-16px] mt-5 mb-4 text-shadow text-white text-3xl font-bold">
-                0,00&nbsp;$
+                {toFixed2(currentWallet.balance.usd)}&nbsp;$
               </div>
               {/* Balance ETH & copied */}
               <div className="flex justify-between items-center text-white">
                 <div className="justify-start">
-                  <p className="font-medium">0 ETH</p>
+                  <p className="font-medium">
+                    {toFixed4(currentWallet.balance.eth)} ETH
+                  </p>
                 </div>
                 <div className="justify-end">
-                  <Copy className="w-7 h-7 cursor-pointer hoverOpacity hover:opacity-70" />
+                  <Copy
+                    className="w-7 h-7 cursor-pointer hoverOpacity hover:opacity-70"
+                    onClick={copyToClipboard}
+                  />
                 </div>
               </div>
             </div>

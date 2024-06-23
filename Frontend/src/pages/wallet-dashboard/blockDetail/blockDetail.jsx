@@ -30,7 +30,7 @@ const BlockDetail = () => {
                   />
                 </TooltipTrigger>
                 <TooltipContent className="bg-slate-700 text-white">
-                  <p>Go back</p>
+                  <span>Go back</span>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

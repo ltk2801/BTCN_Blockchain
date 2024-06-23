@@ -41,7 +41,8 @@ const PrivateKeyAccess = () => {
       const res = await Axios.post("/api/wallet/access", {
         privateKey,
       });
-      setCurrentWallet(res.data.wallet);
+      console.log(res);
+      setCurrentWallet(res?.data?.wallet);
       toast.success("Access wallet successfully !");
       navigate("/wallet/dashboard");
     } catch (error) {

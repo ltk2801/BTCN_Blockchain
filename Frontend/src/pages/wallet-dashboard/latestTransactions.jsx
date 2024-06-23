@@ -152,7 +152,7 @@ const LatestTransactions = () => {
                     <Tooltip>
                       <TooltipTrigger> {maskAddress(dt.from)}</TooltipTrigger>
                       <TooltipContent className="bg-slate-700 text-white">
-                        <p>{dt.from}</p>
+                        <span>{dt.from}</span>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
@@ -165,7 +165,7 @@ const LatestTransactions = () => {
                     <Tooltip>
                       <TooltipTrigger> {maskAddress(dt.to)}</TooltipTrigger>
                       <TooltipContent className="bg-slate-700 text-white">
-                        <p>{dt.to}</p>
+                        <span>{dt.to}</span>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
