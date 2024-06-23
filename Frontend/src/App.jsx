@@ -86,32 +86,19 @@ function App() {
             </ProtectedRouteUser>
           }
         />
-        <Route
-          path="/wallet/dashboard/block/:id"
-          element={
-            <ProtectedRouteUser>
-              {" "}
-              <BlockDetail />{" "}
-            </ProtectedRouteUser>
-          }
-        />
+        <Route path="/wallet/dashboard/block/:id" element={<BlockDetail />} />
         <Route
           path="/wallet/send"
           element={
             <ProtectedRouteUser>
               {" "}
-              <SendToken />{" "}
+              <SendToken />
             </ProtectedRouteUser>
           }
         />
         <Route
           path="wallet/dashboard/transaction/:id"
-          element={
-            <ProtectedRouteUser>
-              {" "}
-              <TransactionDetail />{" "}
-            </ProtectedRouteUser>
-          }
+          element={<TransactionDetail />}
         />
         <Route
           path="/wallet/mine"
