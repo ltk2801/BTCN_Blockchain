@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useAuth } from "@/contexts/authContext";
+import { toast } from "react-toastify";
+import Axios from "@/lib/APIs/Axios";
 
 const Send = () => {
   const [amount, setAmount] = useState("");
@@ -8,29 +11,63 @@ const Send = () => {
   const [amountError, setAmountError] = useState(false);
   const [addressError, setAddressError] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
+  const { currentWallet, setBalanceWallet, setLatestBlocks, balanceWallet } =
+    useAuth();
+
   const validateAmount = (amount) => {
     if (!amount) {
       setAmountError("Please enter your amount");
       return false;
-    } else if (amount < 0) {
+    } else if (amount <= 0) {
       setAmountError("Amount must be greater than 0");
       return false;
-    } else if (amount >= 1000) {
-      setAmountError("Not enough balance to send!");
+    } else if (amount >= balanceWallet.eth) {
+      setAmountError("Amount exceeds your balance!");
       return false;
     } else {
       setAmountError("");
       return true;
     }
   };
-
   const validateAddress = (address) => {
     if (!address) {
-      setAddressError("Please enter your address receive token");
+      setAddressError("Please enter your address to receive tokens");
+      return false;
+    } else if (address.toLowerCase() === currentWallet.address.toLowerCase()) {
+      setAddressError("Cannot send tokens to your own address");
       return false;
     } else {
       setAddressError("");
       return true;
+    }
+  };
+
+  const handleSendEth = async () => {
+    setLoading(true);
+    try {
+      const res = await Axios.post("/api/transaction/sendEth", {
+        privateKey: currentWallet.privateKey,
+        address: address,
+        ethAmount: amount,
+      });
+
+      const getBalance = await Axios.get(
+        `/api/wallet/balance/${currentWallet.address}`
+      );
+
+      const latestBlock = await Axios.get(`/api/blockchain/lastesBlocks`);
+      setLatestBlocks(latestBlock.data.latestBlocks.reverse());
+      setBalanceWallet(getBalance.data.balance);
+
+      toast.success("Send ETH successfully !");
+      setAddress("");
+      setAmount("");
+    } catch (error) {
+      toast.error("Something went wrong : Send eth failed !");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -164,7 +201,7 @@ const Send = () => {
             </div>
             <div className="px-6 py-4 ">
               <h3 className="py-2 text-slate-700 font-medium text-xl">
-                T312312321 ETH
+                {Number(amount) + 0.000256} ETH
               </h3>
             </div>
           </div>
@@ -174,7 +211,9 @@ const Send = () => {
         {amount && address && !amountError && !addressError && (
           <div className="flex justify-center mt-4">
             <button
+              disabled={loading}
               className={`block bg-sky-700 text-white hover:opacity-80 hoverOpacity  w-[100px] rounded-xl text-base font-bold  py-3 uppercase tracking-wider`}
+              onClick={handleSendEth}
             >
               SEND
             </button>

@@ -2,8 +2,32 @@ import React from "react";
 import SidebarMenu from "../sidebarMenu";
 import Network from "./network";
 import Send from "./send";
+import { useEffect } from "react";
+import Axios from "@/lib/APIs/Axios";
+import { useAuth } from "@/contexts/authContext";
 
 const SendToken = () => {
+  const { setBalanceWallet } = useAuth();
+
+  const walletFromStorage = JSON.parse(localStorage.getItem("currentWallet"));
+
+  const fetchBalance = async () => {
+    try {
+      const getBalance = await Axios.get(
+        `/api/wallet/balance/${walletFromStorage.address}`
+      );
+
+      setBalanceWallet(getBalance.data.balance);
+    } catch (error) {
+      console.error("Error fetching balance:", error);
+      // Xử lý lỗi nếu cần thiết
+    }
+  };
+
+  useEffect(() => {
+    fetchBalance();
+  }, []);
+
   return (
     <div className="flex flex-auto min-h-[100vh] max-w-full relative">
       <div className="bg-wallet-base h-full w-full ">

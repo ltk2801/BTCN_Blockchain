@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 
 const SidebarMenu = () => {
   const [openModalBuySell, setOpenModalBuySell] = useState(false);
-  const { logout, currentWallet } = useAuth();
+  const { logout, currentWallet, balanceWallet } = useAuth();
 
   const navigate = useNavigate();
 
@@ -102,13 +102,13 @@ const SidebarMenu = () => {
               </div>
               {/* Balance USD */}
               <div className="ml-[-16px] mt-5 mb-4 text-shadow text-white text-3xl font-bold">
-                {toFixed2(currentWallet?.balance.usd)}&nbsp;$
+                {toFixed2(balanceWallet?.usd)}&nbsp;$
               </div>
               {/* Balance ETH & copied */}
               <div className="flex justify-between items-center text-white">
                 <div className="justify-start">
                   <p className="font-medium">
-                    {toFixed4(currentWallet?.balance.eth)} ETH
+                    {toFixed4(balanceWallet?.eth)} ETH
                   </p>
                 </div>
                 <div className="justify-end">

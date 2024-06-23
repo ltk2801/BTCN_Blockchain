@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { ClipLoader } from "react-spinners"; // Import the ClipLoadermport Spinner component
 import moment from "moment";
-import { ethers } from "ethers";
+import "moment-timezone";
 
 const BlockDetail = () => {
   const { blockHeight } = useParams();
@@ -58,12 +58,15 @@ const BlockDetail = () => {
     }
   };
 
-  const convertTimestamp = (timestamp) => {
+  const convertTimestampToVietnamTime = (timestamp) => {
     // Chuyển đổi timestamp thành đối tượng moment
     const date = moment.unix(timestamp);
 
-    // Định dạng thời gian thành "MMM-DD-YYYY hh:mm:ss A [UTC]"
-    return date.utc().format("MMM-DD-YYYY hh:mm:ss A [UTC]");
+    // Đặt múi giờ thành Việt Nam (GMT+7)
+    date.tz("Asia/Ho_Chi_Minh");
+
+    // Định dạng thời gian theo "MMM-DD-YYYY hh:mm:ss A [UTC]"
+    return date.format("MMM-DD-YYYY hh:mm:ss A [UTC]");
   };
 
   const coverGas = (gas) => {
@@ -171,7 +174,7 @@ const BlockDetail = () => {
                   <div>
                     <span className=" basis-1/4  font-medium text-slate-700">
                       {getTimeAgo(dataBlock?.timestamp)} ({" "}
-                      {convertTimestamp(dataBlock?.timestamp)} )
+                      {convertTimestampToVietnamTime(dataBlock?.timestamp)} )
                     </span>
                   </div>
                 </div>

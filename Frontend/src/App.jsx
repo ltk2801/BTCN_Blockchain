@@ -77,41 +77,17 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/wallet/dashboard"
-          element={
-            <ProtectedRouteUser>
-              {" "}
-              <WalletDashboard />{" "}
-            </ProtectedRouteUser>
-          }
-        />
+        <Route path="/wallet/dashboard" element={<WalletDashboard />} />
         <Route
           path="/wallet/dashboard/block/:blockHeight"
           element={<BlockDetail />}
         />
-        <Route
-          path="/wallet/send"
-          element={
-            <ProtectedRouteUser>
-              {" "}
-              <SendToken />
-            </ProtectedRouteUser>
-          }
-        />
+        <Route path="/wallet/send" element={<SendToken />} />
         <Route
           path="wallet/dashboard/transaction/:id"
           element={<TransactionDetail />}
         />
-        <Route
-          path="/wallet/mine"
-          element={
-            <ProtectedRouteUser>
-              {" "}
-              <Mempool />{" "}
-            </ProtectedRouteUser>
-          }
-        />
+        <Route path="/wallet/mine" element={<Mempool />} />
       </Routes>
     </AuthProvider>
   );
