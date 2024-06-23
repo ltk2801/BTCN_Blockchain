@@ -55,7 +55,7 @@ const depositWallet = async (req, res) => {
       usdAmount,
       ethToUsdRate
     );
-    res.json({ wallet: updatedWallet });
+    res.json(updatedWallet);
   } catch (error) {
     console.error("Error updating wallet balance from USD:", error);
     res.status(500).json({ error: "Error updating wallet balance from USD" });

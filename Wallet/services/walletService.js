@@ -21,6 +21,7 @@ const accessWalletService = async (privateKey) => {
     const balanceInUsd = Number(balanceInEth * ethToUsdRate);
 
     return {
+      privateKey: wallet.privateKey,
       address: wallet.address,
       balance: {
         eth: balanceInEth,

@@ -4,6 +4,8 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 
 const walletRoutes = require("./routes/walletRoutes");
+const blockchainRoutes = require("./routes/blockchainRoutes");
+const transactionRoutes = require("./routes/transactionRoutes");
 
 dotenv.config();
 
@@ -21,6 +23,8 @@ app.use(express.json());
 app.use(express.json());
 
 app.use("/api/wallet", walletRoutes);
+app.use("/api/blockchain", blockchainRoutes);
+app.use("/api/transaction", transactionRoutes);
 
 const PORT = process.env.PORT || 5000;
 
