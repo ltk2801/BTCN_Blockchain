@@ -19,6 +19,7 @@ import SendToken from "./pages/wallet-dashboard/sendToken";
 import TransactionDetail from "./pages/wallet-dashboard/transactionDetail/transactionDetail";
 import Mempool from "./pages/wallet-dashboard/mine/mempool";
 import ProtectedRouteUser from "./lib/protectRouteUser";
+import HistoryTransactions from "./pages/wallet-dashboard/transactionHistory";
 
 function App() {
   return (
@@ -84,10 +85,11 @@ function App() {
         />
         <Route path="/wallet/send" element={<SendToken />} />
         <Route
-          path="wallet/dashboard/transaction/:id"
+          path="wallet/dashboard/transaction/:hashTran"
           element={<TransactionDetail />}
         />
         <Route path="/wallet/mine" element={<Mempool />} />
+        <Route path="/wallet/history" element={<HistoryTransactions />} />
       </Routes>
     </AuthProvider>
   );

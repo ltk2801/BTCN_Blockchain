@@ -17,6 +17,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [latestBlocks, setLatestBlocks] = useState([]);
   const [balanceWallet, setBalanceWallet] = useState(null);
+  const [latestTransactions, setLatestTransactions] = useState([]);
 
   const getLatestBlocks = async () => {
     setLoading(true);
@@ -29,18 +30,43 @@ export function AuthProvider({ children }) {
       setLoading(false);
     }
   };
+  const getLatestTransactions = async () => {
+    setLoading(true);
+    try {
+      const res = await Axios.get(`/api/transaction/latesTransactions`);
+      setLatestTransactions(res.data.latestTransactions.reverse());
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getBalanceWallet = async (address) => {
+    setLoading(true);
+    try {
+      const res = await Axios.get(`/api/wallet/balance/${address}`);
+      setBalanceWallet(res.data.balance);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const walletFromStorage = JSON.parse(localStorage.getItem("currentWallet"));
     if (walletFromStorage) {
       setCurrentWalletState(walletFromStorage);
+      getBalanceWallet(walletFromStorage.address);
     }
     getLatestBlocks();
+    getLatestTransactions();
   }, []);
 
   const setCurrentWallet = (wallet) => {
     setCurrentWalletState(wallet);
-    setBalanceWallet(wallet.balance);
+    setBalanceWallet(wallet?.balance);
     localStorage.setItem("currentWallet", JSON.stringify(wallet));
   };
 
@@ -65,6 +91,8 @@ export function AuthProvider({ children }) {
     setLatestBlocks,
     balanceWallet,
     setBalanceWallet,
+    latestTransactions,
+    setLatestTransactions,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

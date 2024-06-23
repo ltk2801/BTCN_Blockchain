@@ -4,7 +4,12 @@ import { toast } from "react-toastify";
 import Axios from "@/lib/APIs/Axios";
 
 const BuyModal = ({ onClose }) => {
-  const { currentWallet, setBalanceWallet, setLatestBlocks } = useAuth();
+  const {
+    currentWallet,
+    setBalanceWallet,
+    setLatestBlocks,
+    setLatestTransactions,
+  } = useAuth();
   const [amountEth, setAmountEth] = useState("");
   const [money, setMoney] = useState("");
 
@@ -52,6 +57,13 @@ const BuyModal = ({ onClose }) => {
       );
 
       const latestBlock = await Axios.get(`/api/blockchain/lastesBlocks`);
+      const latestTransaction = await Axios.get(
+        `/api/transaction/latesTransactions`
+      );
+      setLatestTransactions(
+        latestTransaction.data.latestTransactions.reverse()
+      );
+
       setLatestBlocks(latestBlock.data.latestBlocks.reverse());
       setBalanceWallet(getBalance.data.balance);
 

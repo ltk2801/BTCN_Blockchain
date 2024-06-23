@@ -243,7 +243,7 @@ const BlockDetail = () => {
                   </div>
                   <div>
                     <span className="basis-1/4   text-slate-700 flex items-center justify-center px-3 py-[2px] border border-slate-300 rounded-2xl shadow-sm font-medium">
-                      0.1 ETH
+                      0.01 ETH
                     </span>
                   </div>
                 </div>

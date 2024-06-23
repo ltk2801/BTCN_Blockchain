@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import SidebarMenu from "../sidebarMenu";
 import { ArrowLeft, CircleHelp } from "lucide-react";
@@ -8,10 +8,66 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Axios from "@/lib/APIs/Axios";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { ClipLoader } from "react-spinners"; // Import the ClipLoadermport Spinner component
+import moment from "moment";
+import "moment-timezone";
 
 const TransactionDetail = () => {
-  const { id } = useParams();
+  const { hashTran } = useParams();
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+  const [dataTransaction, setDataTransaction] = useState(null);
+
+  const getTransaction = async () => {
+    setLoading(true);
+    try {
+      setLoading(true);
+      const res = await Axios.get(`/api/transaction/getTran/${hashTran}`);
+      setDataTransaction(res.data.transaction);
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong !");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getTransaction();
+  }, []);
+
+  const getTimeAgo = (timestamp) => {
+    const now = Math.floor(Date.now() / 1000);
+    const diff = now - timestamp;
+
+    if (diff < 60) {
+      return `${diff} secs ago`;
+    } else if (diff < 3600) {
+      const mins = Math.floor(diff / 60);
+      return `${mins} mins ago`;
+    } else if (diff < 86400) {
+      const hrs = Math.floor(diff / 3600);
+      return `${hrs} hrs ago`;
+    } else {
+      const days = Math.floor(diff / 86400);
+      return `${days} days ago`;
+    }
+  };
+
+  const convertTimestampToVietnamTime = (timestamp) => {
+    // Chuyển đổi timestamp thành đối tượng moment
+    const date = moment.unix(timestamp);
+
+    // Đặt múi giờ thành Việt Nam (GMT+7)
+    date.tz("Asia/Ho_Chi_Minh");
+
+    // Định dạng thời gian theo "MMM-DD-YYYY hh:mm:ss A [UTC]"
+    return date.format("MMM-DD-YYYY hh:mm:ss A [UTC]");
+  };
 
   return (
     <div className="flex flex-auto min-h-[100vh] max-w-full relative">
@@ -37,7 +93,7 @@ const TransactionDetail = () => {
           </div>
           {/* content */}
           <div className="mt-20 p-8 border border-slate-300 rounded-xl shadow-sm bg-white">
-            <div className="flex flex-col justify-center gap-12">
+            <div className="flex flex-col justify-center gap-7">
               <div className="flex items-center">
                 <div className="basis-1/4 flex items-center gap-2">
                   <CircleHelp className="h-5 w-5" />
@@ -46,8 +102,8 @@ const TransactionDetail = () => {
                   </span>
                 </div>
                 <div>
-                  <span className="basis-1/4 font-medium text-slate-700">
-                    0x2b3c4d5e6f7g8h9i0j1k
+                  <span className="basis-1/4 font-medium text-blue-trans">
+                    {dataTransaction?.hash}
                   </span>
                 </div>
               </div>
@@ -59,7 +115,7 @@ const TransactionDetail = () => {
                 </div>
                 <div>
                   <span className="basis-1/4  font-medium flex items-center justify-center px-3 py-[2px] border border-green-access text-green-access rounded-3xl shadow-sm">
-                    Pending
+                    {dataTransaction?.status}
                   </span>
                 </div>
               </div>
@@ -72,7 +128,9 @@ const TransactionDetail = () => {
                 </div>
                 <div>
                   <span className=" basis-1/4  font-medium text-slate-700">
-                    7 secs ago (May-20-2024 12:18:40 AM +UTC)
+                    {getTimeAgo(dataTransaction?.timestamp)} ({" "}
+                    {convertTimestampToVietnamTime(dataTransaction?.timestamp)}{" "}
+                    )
                   </span>
                 </div>
               </div>
@@ -82,8 +140,8 @@ const TransactionDetail = () => {
                   <span className="font-medium text-slate-700">From:</span>
                 </div>
                 <div>
-                  <span className="basis-1/4  font-medium text-slate-700">
-                    0xb2c3d4e5f6g7h8i9j0k1l2
+                  <span className="basis-1/4  font-medium text-blue-trans">
+                    {dataTransaction?.from}
                   </span>
                 </div>
               </div>
@@ -93,8 +151,8 @@ const TransactionDetail = () => {
                   <span className="font-medium text-slate-700">To:</span>
                 </div>
                 <div>
-                  <span className="basis-1/4  font-medium text-slate-700">
-                    0x2b3c4d5e6f7g8h9i0j1k2l3
+                  <span className="basis-1/4  font-medium text-blue-trans">
+                    {dataTransaction?.to}
                   </span>
                 </div>
               </div>
@@ -104,8 +162,19 @@ const TransactionDetail = () => {
                   <span className="font-medium text-slate-700">Value:</span>
                 </div>
                 <div>
-                  <span className="basis-1/4   text-slate-700 flex items-center justify-center px-3 py-[2px] border border-slate-300 rounded-2xl shadow-sm font-medium">
-                    0.1 ETH
+                  <span className="basis-1/4  font-medium flex items-center justify-center px-3 py-[2px] border border-green-access text-green-access rounded-3xl shadow-sm">
+                    {dataTransaction?.value} ETH
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center ">
+                <div className="basis-1/4  flex items-center gap-2">
+                  <CircleHelp className="h-5 w-5" />
+                  <span className="font-medium text-slate-700">Gas Price:</span>
+                </div>
+                <div>
+                  <span className="basis-1/4  font-medium flex items-center justify-center px-3 py-[2px] border border-green-access text-green-access rounded-3xl shadow-sm">
+                    {dataTransaction?.gasPrice} ETH
                   </span>
                 </div>
               </div>
@@ -113,12 +182,34 @@ const TransactionDetail = () => {
                 <div className="basis-1/4  flex items-center gap-2">
                   <CircleHelp className="h-5 w-5" />
                   <span className="font-medium text-slate-700">
-                    Transaction Fee:
+                    Gas Litmit:
                   </span>
                 </div>
                 <div>
+                  <span className="basis-1/4  font-medium flex items-center justify-center px-3 py-[2px] border border-green-access text-green-access rounded-3xl shadow-sm">
+                    {dataTransaction?.gasLimit}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center ">
+                <div className="basis-1/4  flex items-center gap-2">
+                  <CircleHelp className="h-5 w-5" />
+                  <span className="font-medium text-slate-700">Nonce:</span>
+                </div>
+                <div>
                   <span className="basis-1/4   text-slate-700 flex items-center justify-center px-3 py-[2px] border border-slate-300 rounded-2xl shadow-sm font-medium">
-                    0.000256 ETH
+                    {dataTransaction?.nonce}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center ">
+                <div className="basis-1/4  flex items-center gap-2">
+                  <CircleHelp className="h-5 w-5" />
+                  <span className="font-medium text-slate-700">ChainId:</span>
+                </div>
+                <div>
+                  <span className="basis-1/4   text-slate-700 flex items-center justify-center px-3 py-[2px] border border-slate-300 rounded-2xl shadow-sm font-medium">
+                    {dataTransaction?.chainId}
                   </span>
                 </div>
               </div>

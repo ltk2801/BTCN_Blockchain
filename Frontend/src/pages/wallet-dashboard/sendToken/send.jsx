@@ -13,8 +13,13 @@ const Send = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const { currentWallet, setBalanceWallet, setLatestBlocks, balanceWallet } =
-    useAuth();
+  const {
+    currentWallet,
+    setBalanceWallet,
+    setLatestBlocks,
+    balanceWallet,
+    setLatestTransactions,
+  } = useAuth();
 
   const validateAmount = (amount) => {
     if (!amount) {
@@ -58,6 +63,12 @@ const Send = () => {
       );
 
       const latestBlock = await Axios.get(`/api/blockchain/lastesBlocks`);
+      const latestTransaction = await Axios.get(
+        `/api/transaction/latesTransactions`
+      );
+      setLatestTransactions(
+        latestTransaction.data.latestTransactions.reverse()
+      );
       setLatestBlocks(latestBlock.data.latestBlocks.reverse());
       setBalanceWallet(getBalance.data.balance);
 
