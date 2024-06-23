@@ -1,12 +1,15 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
 
 const walletRoutes = require("./routes/walletRoutes");
+const blockRoutes = require("./routes/blockRoutes");
 
 dotenv.config();
 
 const app = express();
+app.use(bodyParser.json());
 const corsOptions = {
   origin: "http://localhost:5173",
   credentials: true,
@@ -19,6 +22,7 @@ app.use(express.json());
 app.use(express.json());
 
 app.use("/api/wallet", walletRoutes);
+app.use("/api/block", blockRoutes);
 
 const PORT = process.env.PORT || 5000;
 

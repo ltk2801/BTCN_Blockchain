@@ -1,5 +1,4 @@
 const walletService = require("../services/walletService");
-const blockchainService = require("../services/blockchainService");
 
 // Tạo ví
 const createWallet = async (req, res) => {
@@ -23,14 +22,8 @@ const accessWallet = async (req, res) => {
   try {
     const wallet = await walletService.accessWalletService(privateKey);
 
-    // Get or create genesis block
-    const genesisBlock = blockchainService.getOrCreateGenesisBlock(
-      wallet.address
-    );
-
     return res.json({
       wallet,
-      genesisBlock,
     });
   } catch (error) {
     return res.status(400).json({
@@ -39,4 +32,26 @@ const accessWallet = async (req, res) => {
   }
 };
 
-module.exports = { createWallet, accessWallet };
+// deposit
+
+const depositWallet = async (req, res) => {
+  const { walletAddress, usdAmount } = req.body;
+  try {
+    // Tính toán số ETH dựa trên tỷ giá ETH/USD
+    const ethAmount = usdAmount / 3450;
+
+    // Gửi yêu cầu gửi ETH tới địa chỉ ví
+    const result = await walletService.depositToWallet(
+      walletAddress,
+      ethAmount
+    );
+    res.status(200).json({ message: "Deposit successful", wallet: result });
+    // console.log(result);
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { createWallet, accessWallet, depositWallet };
