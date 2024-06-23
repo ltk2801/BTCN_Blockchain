@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 const corsOptions = {
   origin: "http://localhost:5173",
   credentials: true,
-  allowedHeaders: ["Authorization"], // Cho phép header Authorization
+  allowedHeaders: ["Authorization", "Content-Type"], // Thêm "Content-Type" vào danh sách allowedHeaders
 };
 
 app.use(cors(corsOptions));

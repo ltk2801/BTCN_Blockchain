@@ -32,6 +32,34 @@ const accessWallet = async (req, res) => {
   }
 };
 
-// deposit
+const getBalance = async (req, res) => {
+  const address = req.params.address;
 
-module.exports = { createWallet, accessWallet };
+  try {
+    const getBalance = await walletService.getBalanceService(address);
+    res.json(getBalance);
+  } catch (error) {
+    console.error("Error get balance wallet by address:", error);
+    res.status(500).json({ error: "Error get balance wallet by address" });
+  }
+};
+
+// deposit
+const depositWallet = async (req, res) => {
+  const { address, usdAmount } = req.body;
+  const ethToUsdRate = 3450; // Tỉ giá ETH/USD cứng ở 3450
+  try {
+    // Cập nhật số dư của ví từ số tiền USD
+    const updatedWallet = await walletService.updateWalletBalanceFromUsd(
+      address,
+      usdAmount,
+      ethToUsdRate
+    );
+    res.json({ wallet: updatedWallet });
+  } catch (error) {
+    console.error("Error updating wallet balance from USD:", error);
+    res.status(500).json({ error: "Error updating wallet balance from USD" });
+  }
+};
+
+module.exports = { createWallet, accessWallet, depositWallet, getBalance };
