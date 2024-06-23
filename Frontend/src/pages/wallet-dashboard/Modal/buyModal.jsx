@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import Axios from "@/lib/APIs/Axios";
 
 const BuyModal = ({ onClose }) => {
-  const { currentWallet, setCurrentWallet } = useAuth();
+  const { currentWallet, setCurrentWallet, setLatestBlocks } = useAuth();
   const [amountEth, setAmountEth] = useState("");
   const [money, setMoney] = useState("");
 
@@ -51,6 +51,9 @@ const BuyModal = ({ onClose }) => {
         `/api/wallet/balance/${currentWallet.address}`
       );
 
+      const latestBlock = await Axios.get(`/api/blockchain/lastesBlocks`);
+      setLatestBlocks(latestBlock.data.latestBlocks.reverse());
+
       const updateWallet = {
         address: currentWallet.address,
         balance: getBalance.data.balance,
@@ -59,7 +62,7 @@ const BuyModal = ({ onClose }) => {
       toast.success("Buy ETH successfully !");
       onClose();
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error("Something went wrong : Buy token failed !");
     } finally {
       setLoading(false);
     }

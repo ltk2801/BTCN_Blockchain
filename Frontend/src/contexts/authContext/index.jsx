@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import Axios from "@/lib/APIs/Axios";
 
 const AuthContext = React.createContext();
 
@@ -8,15 +9,30 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentWallet, setCurrentWalletState] = useState(null);
-
   const [inCreateWallet, setInCreateWallet] = useState(false);
-
   const [inAccessWallet, setInAccessWallet] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [latestBlocks, setLatestBlocks] = useState([]);
+
+  const getLatestBlocks = async () => {
+    setLoading(true);
+    try {
+      const res = await Axios.get(`/api/blockchain/lastesBlocks`);
+      setLatestBlocks(res.data.latestBlocks.reverse());
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const walletFromStorage = JSON.parse(localStorage.getItem("currentWallet"));
     if (walletFromStorage) {
       setCurrentWalletState(walletFromStorage);
     }
+    getLatestBlocks();
   }, []);
 
   const setCurrentWallet = (wallet) => {
@@ -39,6 +55,9 @@ export function AuthProvider({ children }) {
     inCreateWallet,
     inAccessWallet,
     logout,
+    loading,
+    latestBlocks,
+    setLatestBlocks,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

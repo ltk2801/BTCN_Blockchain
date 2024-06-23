@@ -86,7 +86,10 @@ function App() {
             </ProtectedRouteUser>
           }
         />
-        <Route path="/wallet/dashboard/block/:id" element={<BlockDetail />} />
+        <Route
+          path="/wallet/dashboard/block/:blockHeight"
+          element={<BlockDetail />}
+        />
         <Route
           path="/wallet/send"
           element={

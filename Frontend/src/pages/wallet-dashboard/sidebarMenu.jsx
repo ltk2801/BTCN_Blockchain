@@ -91,10 +91,10 @@ const SidebarMenu = () => {
                     <Tooltip>
                       <TooltipTrigger>
                         {" "}
-                        {maskAddress(currentWallet.address)}
+                        {maskAddress(currentWallet?.address)}
                       </TooltipTrigger>
                       <TooltipContent className="bg-slate-700 text-white items-center">
-                        <span>{currentWallet.address}</span>
+                        <span>{currentWallet?.address}</span>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
@@ -102,13 +102,13 @@ const SidebarMenu = () => {
               </div>
               {/* Balance USD */}
               <div className="ml-[-16px] mt-5 mb-4 text-shadow text-white text-3xl font-bold">
-                {toFixed2(currentWallet.balance.usd)}&nbsp;$
+                {toFixed2(currentWallet?.balance.usd)}&nbsp;$
               </div>
               {/* Balance ETH & copied */}
               <div className="flex justify-between items-center text-white">
                 <div className="justify-start">
                   <p className="font-medium">
-                    {toFixed4(currentWallet.balance.eth)} ETH
+                    {toFixed4(currentWallet?.balance.eth)} ETH
                   </p>
                 </div>
                 <div className="justify-end">
