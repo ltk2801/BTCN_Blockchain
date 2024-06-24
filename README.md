@@ -15,3 +15,11 @@ Sử dụng nodejs, expressjs, ethers và hardhat => npm install => chia 2 termi
 
 # Video demo 
 https://www.youtube.com/watch?v=lR_LZHHFxkQ&ab_channel=Tu%E1%BA%A5nKhanh
+
+# Tài liệu tham khảo 
+https://www.myetherwallet.com/
+https://etherscan.io/
+https://docs.ethers.org/v5/
+https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-ethers
+https://hardhat.org/hardhat-runner/docs/getting-started#overview
+https://chatgpt.com/
