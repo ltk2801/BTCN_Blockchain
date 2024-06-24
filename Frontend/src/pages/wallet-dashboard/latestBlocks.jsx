@@ -73,7 +73,7 @@ const LatestBlocks = () => {
       {loading ? (
         <ClipLoader size={50} color={"red"} loading={loading} />
       ) : (
-        <div className="min-h-[300px] bg-white border border-slate-300 rounded-md shadow-sm">
+        <div className="min-h-[200px] bg-white border border-slate-300 rounded-md shadow-sm">
           <div className="flex items-center p-4 text-slate-700 font-medium text-base border-b border-slate-300">
             <div className="basis-2/6 flex justify-start">
               <p>Block Height</p>

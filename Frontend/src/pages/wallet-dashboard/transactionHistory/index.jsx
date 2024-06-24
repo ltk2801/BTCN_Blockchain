@@ -3,6 +3,8 @@ import SidebarMenu from "../sidebarMenu";
 import { useEffect } from "react";
 import Axios from "@/lib/APIs/Axios";
 import { useAuth } from "@/contexts/authContext";
+import LatestReceiveTransactions from "./latestReceiveTransactions";
+import LatestSendTransactions from "./latestSendTransactions";
 
 const HistoryTransactions = () => {
   const { setBalanceWallet } = useAuth();
@@ -31,7 +33,10 @@ const HistoryTransactions = () => {
       <div className="bg-wallet-base h-full w-full ">
         <SidebarMenu />
         <div className="ml-[340px] px-10 py-4 min-h-[93vh]">
-          <div className="flex  w-full min-w-full"></div>
+          <div className="flex  w-full min-w-full">
+            <LatestReceiveTransactions />
+            <LatestSendTransactions />
+          </div>
         </div>
         <footer className="ml-[340px] px-14 py-5  bg-white flex items-center justify-between">
           <p className="text-slate-700 font-medium">

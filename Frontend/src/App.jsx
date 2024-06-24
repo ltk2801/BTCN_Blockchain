@@ -88,7 +88,7 @@ function App() {
           path="wallet/dashboard/transaction/:hashTran"
           element={<TransactionDetail />}
         />
-        <Route path="/wallet/mine" element={<Mempool />} />
+        <Route path="/wallet/stake" element={<Mempool />} />
         <Route path="/wallet/history" element={<HistoryTransactions />} />
       </Routes>
     </AuthProvider>

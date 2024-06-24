@@ -28,7 +28,7 @@ const Send = () => {
     } else if (amount <= 0) {
       setAmountError("Amount must be greater than 0");
       return false;
-    } else if (amount >= balanceWallet.eth) {
+    } else if (Number(amount) >= Number(balanceWallet.eth)) {
       setAmountError("Amount exceeds your balance!");
       return false;
     } else {

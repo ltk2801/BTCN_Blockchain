@@ -26,8 +26,10 @@ const SidebarMenu = () => {
   // Kiểm tra nếu location.pathname chứa '/wallet/send' thì activeClass = 'active'
   const sendActive = location.pathname.includes("/wallet/send") ? true : false;
 
-  // Kiểm tra nếu location.pathname chứa '/wallet/mine' thì activeClass = 'active'
-  const mineActive = location.pathname.includes("/wallet/mine") ? true : false;
+  // Kiểm tra nếu location.pathname chứa '/wallet/stake' thì activeClass = 'active'
+  const stakeActive = location.pathname.includes("/wallet/stake")
+    ? true
+    : false;
 
   // Kiểm tra nếu location.pathname chứa '/wallet/history' thì activeClass = 'active'
   const historyActive = location.pathname.includes("/wallet/history")
@@ -188,6 +190,23 @@ const SidebarMenu = () => {
           </div>
         </div>
         <div
+          className="py-3 px-4 text-shadow hover:bg-white hover:bg-opacity-10 cursor-pointer hover:shadow-sm "
+          onClick={handleOpenModalBuySell}
+        >
+          <div className="flex items-center ">
+            <div className="basis-1/4 flex justify-center">
+              <img
+                src="https://www.myetherwallet.com/img/icon-credit-card.170d3a45.svg"
+                alt="icon"
+                className="w-7 h-7"
+              />
+            </div>
+            <div className="basis-3/4">
+              <p className="text-white-95 font-light text-base">Buy / Sell</p>
+            </div>
+          </div>
+        </div>
+        <div
           className={`py-3 px-4 text-shadow cursor-pointer ${
             historyActive
               ? "bg-white bg-opacity-10 "
@@ -217,29 +236,12 @@ const SidebarMenu = () => {
           </div>
         </div>
         <div
-          className="py-3 px-4 text-shadow hover:bg-white hover:bg-opacity-10 cursor-pointer hover:shadow-sm "
-          onClick={handleOpenModalBuySell}
-        >
-          <div className="flex items-center ">
-            <div className="basis-1/4 flex justify-center">
-              <img
-                src="https://www.myetherwallet.com/img/icon-credit-card.170d3a45.svg"
-                alt="icon"
-                className="w-7 h-7"
-              />
-            </div>
-            <div className="basis-3/4">
-              <p className="text-white-95 font-light text-base">Buy / Sell</p>
-            </div>
-          </div>
-        </div>
-        <div
           className={`py-3 px-4 text-shadow cursor-pointer ${
-            mineActive
+            stakeActive
               ? "bg-white bg-opacity-10 "
               : "hover:bg-white hover:bg-opacity-10 hover:shadow-sm "
           }  `}
-          onClick={() => navigate("/wallet/mine")}
+          onClick={() => navigate("/wallet/stake")}
         >
           <div className="flex items-center ">
             <div className="basis-1/4 flex justify-center">
@@ -252,12 +254,12 @@ const SidebarMenu = () => {
             <div className="basis-3/4">
               <p
                 className={`${
-                  mineActive
+                  stakeActive
                     ? " text-white font-medium text-base"
                     : "text-white-95 font-light text-base"
                 }`}
               >
-                Mine
+                Stake
               </p>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Boxes } from "lucide-react";
 import {
   Tooltip,
@@ -7,11 +7,36 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ClipLoader } from "react-spinners";
-import { useAuth } from "@/contexts/authContext";
+import Axios from "@/lib/APIs/Axios";
 
-const LatestTransactions = () => {
+const LatestReceiveTransactions = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { loading, latestTransactions } = useAuth();
+
+  const [loading, setLoading] = useState(false);
+  const [latestTransactionsReceive, setLatestTransactionsReceive] = useState(
+    []
+  );
+
+  const walletFromStorage = JSON.parse(localStorage.getItem("currentWallet"));
+
+  const getLatestTransactionsReceive = async () => {
+    setLoading(true);
+    try {
+      const res = await Axios.get(
+        `/api/transaction/getTransactionsReceive/${walletFromStorage.address}`
+      );
+      setLatestTransactionsReceive(res.data.transactions.reverse());
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getLatestTransactionsReceive();
+  }, []);
+
   const itemsPerPage = 6;
 
   const handlePreviousPage = () => {
@@ -21,14 +46,16 @@ const LatestTransactions = () => {
   };
 
   const handleNextPage = () => {
-    if (currentPage < Math.ceil(latestTransactions?.length / itemsPerPage)) {
+    if (
+      currentPage < Math.ceil(latestTransactionsReceive?.length / itemsPerPage)
+    ) {
       setCurrentPage(currentPage + 1);
     }
   };
 
   const paginatedData =
-    latestTransactions.length > 0
-      ? latestTransactions.slice(
+    latestTransactionsReceive.length > 0
+      ? latestTransactionsReceive.slice(
           (currentPage - 1) * itemsPerPage,
           currentPage * itemsPerPage
         )
@@ -89,7 +116,7 @@ const LatestTransactions = () => {
   return (
     <div className="basis-1/2 p-4">
       <h2 className="text-3xl font-bold text-slate-700 tracking-wide border-l-[6px] border-blue-trans pl-2 mb-6">
-        Latest Transactions
+        Latest Receive Transactions
       </h2>
 
       {loading ? (
@@ -177,7 +204,7 @@ const LatestTransactions = () => {
               <div className="flex items-center justify-end p-4 text-slate-700 font-medium text-base  gap-10">
                 <div>
                   Page {currentPage} of{" "}
-                  {Math.ceil(latestTransactions?.length / itemsPerPage)}
+                  {Math.ceil(latestTransactionsReceive?.length / itemsPerPage)}
                 </div>
                 <button
                   onClick={handlePreviousPage}
@@ -190,7 +217,7 @@ const LatestTransactions = () => {
                   onClick={handleNextPage}
                   disabled={
                     currentPage ===
-                    Math.ceil(latestTransactions?.length / itemsPerPage)
+                    Math.ceil(latestTransactionsReceive?.length / itemsPerPage)
                   }
                   className="disabled:opacity-50"
                 >
@@ -205,4 +232,4 @@ const LatestTransactions = () => {
   );
 };
 
-export default LatestTransactions;
+export default LatestReceiveTransactions;

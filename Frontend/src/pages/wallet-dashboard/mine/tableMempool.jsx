@@ -139,7 +139,7 @@ const TableMempool = () => {
             className={` bg-sky-700 text-white hover:opacity-80 hoverOpacity px-6 rounded-xl text-base font-bold  py-3 uppercase tracking-wider flex items-center justify-center gap-2`}
           >
             <Hammer className="w-6 h-6 fill-white" />
-            <span>start mining</span>
+            <span>start staking</span>
           </button>
         </div>
       </div>
