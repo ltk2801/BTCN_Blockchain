@@ -126,9 +126,62 @@ const getTransactionService = async (txHash) => {
     throw error;
   }
 };
+const getTransactionsAddressSendService = async (address) => {
+  try {
+    const latestBlockNumber = await provider.getBlockNumber();
+    let transactions = [];
+
+    // Lặp qua từng block để lấy các giao dịch
+    for (let i = 0; i <= latestBlockNumber; i++) {
+      const block = await provider.getBlockWithTransactions(i);
+      const txsFromAddress = block.transactions.filter(
+        (tx) => tx.from.toLowerCase() === address.toLowerCase()
+      );
+      const formattedTxs = txsFromAddress.map((tx) => ({
+        ...tx,
+        value: ethers.utils.formatEther(tx.value),
+        timestamp: block.timestamp, // Lấy timestamp từ block
+      }));
+      transactions = transactions.concat(formattedTxs);
+    }
+
+    return transactions;
+  } catch (error) {
+    console.error("Error getting transactions from address:", error);
+    throw error;
+  }
+};
+
+const getTransactionsAddressReceiveService = async (address) => {
+  try {
+    const latestBlockNumber = await provider.getBlockNumber();
+    let transactions = [];
+
+    // Lặp qua từng block để lấy các giao dịch
+    for (let i = 0; i <= latestBlockNumber; i++) {
+      const block = await provider.getBlockWithTransactions(i);
+      const txsToAddress = block.transactions.filter(
+        (tx) => tx.to.toLowerCase() === address.toLowerCase()
+      );
+      const formattedTxs = txsToAddress.map((tx) => ({
+        ...tx,
+        value: ethers.utils.formatEther(tx.value),
+        timestamp: block.timestamp, // Lấy timestamp từ block
+      }));
+      transactions = transactions.concat(formattedTxs);
+    }
+
+    return transactions;
+  } catch (error) {
+    console.error("Error getting transactions to address:", error);
+    throw error;
+  }
+};
 
 module.exports = {
   sendEthByAddress,
   getLatestTransactionsService,
   getTransactionService,
+  getTransactionsAddressSendService,
+  getTransactionsAddressReceiveService,
 };

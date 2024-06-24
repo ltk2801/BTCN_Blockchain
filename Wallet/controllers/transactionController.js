@@ -38,4 +38,32 @@ const getTransaction = async (req, res) => {
   }
 };
 
-module.exports = { sendEth, getLatestTransactions, getTransaction };
+const getTransactionsAddressSend = async (req, res) => {
+  const address = req.params.address;
+  try {
+    const transactions =
+      await transactionService.getTransactionsAddressSendService(address);
+    res.json({ transactions: transactions });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to get transactions" });
+  }
+};
+
+const getTransactionsAddressReceive = async (req, res) => {
+  const address = req.params.address;
+  try {
+    const transactions =
+      await transactionService.getTransactionsAddressReceiveService(address);
+    res.json({ transactions: transactions });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to get transactions" });
+  }
+};
+
+module.exports = {
+  sendEth,
+  getLatestTransactions,
+  getTransaction,
+  getTransactionsAddressSend,
+  getTransactionsAddressReceive,
+};
